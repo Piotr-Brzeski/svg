@@ -46,5 +46,28 @@ public:
     }
   }
   
+  template<typename ModelT>
+  void periodic(ModelT const& model, int x, int y) {
+    for(auto row = 0; row < model.size(); ++row) {
+      for(auto column = 0; column < model[row].size(); ++column) {
+        if(model[row][column] == 1) {
+          auto pos_x = position(column + x);
+          auto pos_y = position(row + y);
+          fill(pos_x, pos_y);
+        }
+      }
+    }
+  }
+  
+private:
+  int position(int pos) {
+    while(pos < 0) {
+      pos += system_size;
+    }
+    while(pos >= system_size) {
+      pos -= system_size;
+    }
+    return pos;
+  }
   
 };
