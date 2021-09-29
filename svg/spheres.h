@@ -24,6 +24,10 @@ public:
       add_line(i, 0, i, system_size*scale);
       add_line(0, i, system_size*scale, i);
     }
+    add_line(1, 1, 1, system_size*scale - 1);
+    add_line(1, 1, system_size*scale - 1, 1);
+    add_line(system_size*scale - 1, 1, system_size*scale - 1, system_size*scale - 1);
+    add_line(1, system_size*scale - 1, system_size*scale - 1, system_size*scale - 1);
   }
   
   void color(int red, int green, int blue) {

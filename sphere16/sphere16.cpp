@@ -42,8 +42,8 @@ int main(int argc, const char * argv[]) {
   
   image.color(0, 0, 0);
   image.grid();
-  image.add_rect(0, 10*image.scale - 1, system_size*image.scale, 3);
-  image.add_rect(10*image.scale - 1, 0, 3, system_size*image.scale);
+  image.add_rect(0, 10*image.scale - 2, system_size*image.scale, 5);
+  image.add_rect(10*image.scale - 2, 0, 5, system_size*image.scale);
   
   std::cout << image.get() << std::endl;
   return 0;
