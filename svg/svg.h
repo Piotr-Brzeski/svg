@@ -145,10 +145,10 @@ public:
   class text_field
   {
   public:
-    text_field(double size,tag& text, text_mode mode)
-    : m_size(size)
-    , m_text(text)
-    , m_mode(mode)
+    text_field(double size, tag& text, text_mode mode)
+      : m_size(size)
+      , m_text(text)
+      , m_mode(mode)
     {
     }
     
@@ -158,6 +158,18 @@ public:
       double y = (m_mode == text_mode::vertical || m_mode == text_mode::v_center) ? -0.2*m_size : 0.8*m_size;
       auto& tspan = m_text.add_child("tspan");
       tspan.set_attribute("y", y);
+      tspan.set_attribute("font-family", "serif");
+      tspan.add_text(std::forward<text_t>(text));
+    }
+    
+    template<class text_t>
+    void add_small(text_t&& text)
+    {
+      double y = 0.7*m_size; //(m_mode == text_mode::vertical || m_mode == text_mode::v_center) ? -0.2*m_size : 0.8*m_size;
+      auto& tspan = m_text.add_child("tspan");
+      tspan.set_attribute("y", y);
+      tspan.set_attribute("font-family", "serif");
+      tspan.set_attribute("style", "font-size:65%");
       tspan.add_text(std::forward<text_t>(text));
     }
     
@@ -167,6 +179,7 @@ public:
       double y = (m_mode == text_mode::vertical || m_mode == text_mode::v_center) ? -0.145*m_size : 0.875*m_size;
       auto& tspan = m_text.add_child("tspan");
       tspan.set_attribute("y", y);
+      tspan.set_attribute("font-family", "serif");
       tspan.set_attribute("style", "font-size:65%");
       tspan.add_text(std::forward<text_t>(text));
     }
@@ -177,6 +190,7 @@ public:
       double y = (m_mode == text_mode::vertical || m_mode == text_mode::v_center) ? -0.5*m_size : 0.5*m_size;
       auto& tspan = m_text.add_child("tspan");
       tspan.set_attribute("y", y);
+      tspan.set_attribute("font-family", "serif");
       tspan.set_attribute("style", "font-size:65%");
       tspan.add_text(std::forward<text_t>(text));
     }
@@ -362,6 +376,7 @@ public:
     return content;
   }
   
+private:
   void set_color(std::string& color, uint8_t red, uint8_t green, uint8_t blue)
   {
     color = "rgb(";
@@ -383,7 +398,6 @@ public:
     color += ')';
   }
   
-private:
   void add_drawing_attributes(tag& t)
   {
     t.set_attribute("fill", m_fill);

@@ -38,19 +38,19 @@ void add(int x, int y) {
 }
 
 void cluster1() {
-  image.color(0, 255, 0);
+  image.color(156, 225, 52); // Green 433
 }
 
 void cluster2() {
-  image.color(0, 255, 255);
+  image.color(250, 240, 71); // Yellow 561
 }
 
 void cluster3() {
-  image.color(255, 0, 0);
+  image.color(69, 31, 96); // Purple 196
 }
 
 void cluster4() {
-  image.color(0, 0, 255);
+  image.color(225, 54, 0); // Red 279
 }
 
 void img1() {
@@ -95,20 +95,45 @@ void img4() {
 
   cluster3();
   add(35, 11);
+}
 
+void grid() {
+  image.color(0, 0, 0);
+  image.grid();
+}
+
+void image1() {
+  img1();
+  grid();
+  image.set_big_description("a");
+}
+
+void image2() {
+  img2();
+  grid();
+  image.set_big_description("b");
+}
+
+void image3() {
+  img3();
+  grid();
+  image.set_big_description("c");
+}
+
+void image4() {
+  img4();
+  grid();
+  image.set_big_description("d");
 }
 
 }
 
 
 int main(int argc, const char * argv[]) {
-//  img1(); // 1
-//  img2(); // 6
-//  img3(); // 12
-  img4();   // 16
-  
-  image.color(0, 0, 0);
-  image.grid();
+//  image1(); // 1
+//  image2(); // 6
+  image3(); // 12
+//  image4();   // 16
   
   std::cout << image.get() << std::endl;
   return 0;

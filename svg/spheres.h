@@ -15,7 +15,8 @@ public:
   int const system_size;
   
   spheres(int size)
-    : system_size(size)
+    : svg::svg(false)
+    , system_size(size)
   {
   }
   
@@ -37,6 +38,22 @@ public:
   
   void fill(int x, int y) {
     add_rect(x*scale + 1, y*scale + 1, scale - 2, scale - 2);
+  }
+  
+  void set_description(const char* description) {
+    fill_color(255, 255, 255);
+    add_rect(1, 1, 2*scale - 2, 2*scale - 2);
+    fill_color(0, 0, 0);
+    auto text_field = add_text_field(1, 1, 2*scale - 2, 2*scale - 2, svg::svg::text_mode::h_center);
+    text_field.add_small(description);
+  }
+  
+  void set_big_description(const char* description) {
+    fill_color(255, 255, 255);
+    add_rect(scale + 1, scale + 1, 3*scale - 2, 3*scale - 2);
+    fill_color(0, 0, 0);
+    auto text_field = add_text_field(scale + 1, scale + 1, 3*scale - 2, 3*scale - 2, svg::svg::text_mode::h_center);
+    text_field.add(description);
   }
   
   template<typename ModelT>
