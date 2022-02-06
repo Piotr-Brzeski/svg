@@ -5,7 +5,7 @@
 //  Created by Piotr Brzeski on 2021-09-05.
 //
 
-#include "spheres.h"
+#include "../svg/spheres.h"
 #include <array>
 #include <iostream>
 
