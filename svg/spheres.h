@@ -60,8 +60,32 @@ public:
   void model(ModelT const& model, int x, int y) {
     for(auto row = 0; row < model.size(); ++row) {
       for(auto column = 0; column < model[row].size(); ++column) {
-        if(model[row][column] == 1) {
+        if(model[row][column] > 0) {
           fill(column + y, row + x);
+        }
+      }
+    }
+  }
+  
+  template<typename ModelT>
+  void contour(ModelT const& model, int x, int y) {
+    for(auto row = 0; row < model.size(); ++row) {
+      for(auto column = 0; column < model[row].size(); ++column) {
+        if(model[row][column] > 0) {
+          auto pos_x = column + y;
+          auto pos_y = row + x;
+          if(column == 0 || model[row][column - 1] == 0) {
+            add_rect(pos_x*scale - 2, pos_y*scale - 2, 5, scale + 5);
+          }
+          if(column == model[row].size() - 1 || model[row][column + 1] == 0) {
+            add_rect((pos_x + 1)*scale - 2, pos_y*scale - 2, 5, scale + 5);
+          }
+          if(row == 0 || model[row - 1][column] == 0) {
+            add_rect(pos_x*scale - 2, pos_y*scale - 2, scale + 5, 5);
+          }
+          if(row == model.size() - 1 || model[row + 1][column] == 0) {
+            add_rect(pos_x*scale - 2, (pos_y + 1)*scale - 2, scale + 5, 5);
+          }
         }
       }
     }
@@ -71,7 +95,7 @@ public:
   void periodic(ModelT const& model, int x, int y) {
     for(auto row = 0; row < model.size(); ++row) {
       for(auto column = 0; column < model[row].size(); ++column) {
-        if(model[row][column] == 1) {
+        if(model[row][column] > 0) {
           auto pos_x = position(column + x);
           auto pos_y = position(row + y);
           fill(pos_x, pos_y);
