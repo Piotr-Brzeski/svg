@@ -194,7 +194,7 @@ class bond_image: public spheres {
 public:
 	bond_image(ModelT const& model, int max_cluster)
 		: spheres(20) {
-		constexpr auto width = 7;
+		constexpr auto width = 11;
 		constexpr auto half_width = width/2;
 		color(0, 0, 0);
 		grid();
@@ -208,10 +208,10 @@ public:
 				auto cluster = model[pos_x][pos_y];
 				if(cluster > 0) {
 					if(cluster == max_cluster) {
-						color(225, 54, 0);
+						color(225, 54, 0); // red
 					}
 					else {
-						color(69, 31, 96);
+						color(15,146,0); // green
 					}
 					add_rect(pos_x*scale - half_width, pos_y*scale - half_width, scale + width, width);
 				}
@@ -221,23 +221,24 @@ public:
 				cluster = model[20 + pos_y][pos_x];
 				if(cluster > 0) {
 					if(cluster == max_cluster) {
-						color(225, 54, 0);
+						color(225, 54, 0); // red
 					}
 					else {
-						color(69, 31, 96);
+						color(15,146,0); // green
 					}
 					add_rect(pos_x*scale - half_width, pos_y*scale - half_width, width, scale + width);
 				}
 			}
 		}
+		set_margin(scale/10, scale/10);
 	}
 };
 
 int main(int argc, const char * argv[]) {
 //	auto image = bond_image(model_0, cluster_0);
-//	auto image = bond_image(model_157, cluster_157);
+	auto image = bond_image(model_157, cluster_157);
 //	auto image = bond_image(model_314, cluster_314);
-	auto image = bond_image(model_473, cluster_473);
+//	auto image = bond_image(model_473, cluster_473);
 	std::cout << image.get() << std::endl;
 	return 0;
 }

@@ -85,7 +85,7 @@
 /* Begin PBXFileReference section */
 		A779F76226C918F500E96667 /* svg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = svg; sourceTree = BUILT_PRODUCTS_DIR; };
 		A779F76526C918F500E96667 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		A779F76C26C9190800E96667 /* svg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svg.h; sourceTree = "<group>"; };
+		A779F76C26C9190800E96667 /* svg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = svg.h; sourceTree = "<group>"; usesTabs = 0; };
 		A77DE7DE26CAB25100A05271 /* sphere16 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sphere16; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77DE7E026CAB25100A05271 /* sphere16.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sphere16.cpp; sourceTree = "<group>"; };
 		A77DE7E526CAB2CE00A05271 /* spheres.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spheres.h; sourceTree = "<group>"; };

@@ -203,12 +203,21 @@ public:
   };  //  class text_field
   
   svg(bool grayscale = false)
-    : m_definitions(m_svg.add_child("defs"))
+    : m_definitions(m_svg1.add_child("defs"))
+    , m_main_group(m_svg1.add_child("g"))
     , m_grayscale(grayscale)
   {
-    m_svg.set_attribute("xmlns", "http://www.w3.org/2000/svg");
+    m_svg1.set_attribute("xmlns", "http://www.w3.org/2000/svg");
   }
   
+  template<typename x_t, typename y_t>
+  typename std::enable_if<std::is_arithmetic<typename std::remove_reference<x_t>::type>::value && std::is_arithmetic<typename std::remove_reference<y_t>::type>::value>::type
+  set_margin(x_t&& x, y_t&& y) {
+    auto translate = "translate(" + std::to_string(x) + "," + std::to_string(y) + ")";
+    m_main_group.set_attribute("transform", std::move(translate));
+    update_size(0.0, 0.0, m_width + 2*x, m_height + 2*y);
+  }
+	
   void fill_none()
   {
     m_fill = "none";
@@ -256,7 +265,8 @@ public:
   std::is_arithmetic<typename std::remove_reference<y2_t>::type>::value>::type
   add_line(x1_t&& x1, y1_t&& y1, x2_t&& x2, y2_t&& y2)
   {
-    auto& line = m_svg.add_child("line");
+    
+    auto& line = m_main_group.add_child("line");
     line.set_attribute("x1", std::forward<x1_t>(x1));
     line.set_attribute("y1", std::forward<y1_t>(y1));
     line.set_attribute("x2", std::forward<x2_t>(x2));
@@ -273,7 +283,7 @@ public:
   std::is_arithmetic<typename std::remove_reference<height_t>::type>::value>::type
   add_rect(x_t&& x, y_t&& y, width_t&& width, height_t&& height)
   {
-    auto& rect = m_svg.add_child("rect");
+    auto& rect = m_main_group.add_child("rect");
     rect.set_attribute("x", std::forward<x_t>(x));
     rect.set_attribute("y", std::forward<y_t>(y));
     rect.set_attribute("width", std::forward<width_t>(width));
@@ -288,7 +298,7 @@ public:
   std::is_arithmetic<typename std::remove_reference<r_t>::type>::value>::type
   add_circle(x_t&& x, y_t&& y, r_t&& r)
   {
-    auto& circle = m_svg.add_child("circle");
+    auto& circle = m_main_group.add_child("circle");
     circle.set_attribute("cx", std::forward<x_t>(x));
     circle.set_attribute("cy", std::forward<y_t>(y));
     circle.set_attribute("r", std::forward<r_t>(r));
@@ -305,7 +315,7 @@ public:
       }
       positions += point.position;
     }
-    auto& polygon = m_svg.add_child("polygon");
+    auto& polygon = m_main_group.add_child("polygon");
     polygon.set_attribute("points", std::move(positions));
     add_drawing_attributes(polygon);
     // TODO: update_size somehow
@@ -318,7 +328,7 @@ public:
   std::is_arithmetic<typename std::remove_reference<height_t>::type>::value, text_field>::type
   add_text_field(x_t&& x, y_t&& y, width_t&& width, height_t&& height, text_mode mode = text_mode::horizontal)
   {
-    tag& field = m_svg.add_child("svg");
+    tag& field = m_main_group.add_child("svg");
     field.set_attribute("x", std::forward<x_t>(x));
     field.set_attribute("y", std::forward<y_t>(y));
     field.set_attribute("width", std::forward<width_t>(width));
@@ -370,9 +380,9 @@ public:
     std::string content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\" \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n";
     double width = m_x < std::numeric_limits<double>::max() ? m_width + m_x : m_width;
     double height = m_y < std::numeric_limits<double>::max() ? m_height + m_y : m_height;
-    m_svg.set_attribute("width", width);
-    m_svg.set_attribute("height", height);
-    content += m_svg.get();
+    m_svg1.set_attribute("width", width);
+    m_svg1.set_attribute("height", height);
+    content += m_svg1.get();
     return content;
   }
   
@@ -413,8 +423,9 @@ private:
     m_height = std::max(m_height, y + height);
   }
   
-  tag                                 m_svg           {"svg"};
+  tag                                 m_svg1          {"svg"};
   tag&                                m_definitions;
+  tag&                                m_main_group;
   std::string                         m_fill          = "none";
   std::string                         m_stroke_color  = "rgb(0,0,0)";
   double                              m_stroke_width  = 1.0;
